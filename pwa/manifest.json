@@ -1,0 +1,47 @@
+{
+    "name": "Trinket Gallery",
+    "short_name": "Trinkets",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background-color": "#FFBE98",
+    "theme-color": "#ff8b47",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/assets/icons/treasure-512.png",
+            "sizes": "512x512"
+        },
+
+    
+
+        {
+            "src": "/assets/icons/treasure-256.png",
+            "sizes": "256x256"
+        },
+
+        {
+            "src": "/assets/icons/treasure-128.png",
+            "sizes": "128x128"
+        },
+
+        {
+            "src": "/assets/icons/treasure-64.png",
+            "sizes": "64x64"
+        },
+
+        {
+            "src": "/assets/icons/treasure-32.png",
+            "sizes": "32x32"
+        },
+
+        {
+            "src": "/assets/icons/treasure-24.png",
+            "sizes": "24x24"
+        },
+
+        {
+            "src": "/assets/icons/treasure-16.png",
+            "sizes": "16x16"
+        }
+    ]
+}
