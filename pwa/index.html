@@ -32,7 +32,7 @@
     </ul> -->
     <div class="container" id="list" >
         <a class="btn btn-primary" style="padding: 5px; margin: 5px;" href="/new">Add new item</a>
-        <button onclick="subscribe()" class="btn btn-primary" style="padding: 5px; margin: 5px;">Subscribe to notifications</button>
+        <button onclick="s()" class="btn btn-primary" style="padding: 5px; margin: 5px;">Subscribe to notifications</button>
         
     </div>
 
@@ -102,6 +102,48 @@
         .catch(err => console.error('Error registering service worker', err));
 
 
+        
+
+
+        let sw = await navigator.serviceWorker.ready;
+
+        sw.periodicSync.register('syncData', {
+            minInterval: 5
+        });
+
+    </script>
+
+    <script>
+        async function s(){
+
+           
+            
+
+           
+                console.log('Subscribing to notificiations...')
+                let sw = await navigator.serviceWorker.ready;
+                let push = await sw.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array('BEwSqAEzcmIJlC1FX2JpO8yL_ALcwo8of2p25SvPhLP8hyzqiT9YArvhdQf1vQOYgEBPf9-_7XfVqdM3d3vcczU')
+                });
+
+                console.log('Push registered')
+                fetch('/subscribe', {
+                    method: 'POST',
+                    body: JSON.stringify(push),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                }).then(() => {
+                    console.log('Push subscription sent')
+                }).catch((e) => {
+                    console.log("Error while sendind push sub", e)
+                })
+            
+
+            
+        }
+
         function urlBase64ToUint8Array(base64String) {
             var padding = "=".repeat((4 - (base64String.length % 4)) % 4);
             var base64 = (base64String + padding)
@@ -116,36 +158,6 @@
             }
             return outputArray;
         }
-
-
-        let sw = await navigator.serviceWorker.ready;
-
-        sw.periodicSync.register('syncData', {
-            minInterval: 5
-        });
-
-
-       async function subscribe(){
-            let push = await sw.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array('BEwSqAEzcmIJlC1FX2JpO8yL_ALcwo8of2p25SvPhLP8hyzqiT9YArvhdQf1vQOYgEBPf9-_7XfVqdM3d3vcczU')
-            });
-
-            console.log('Push registered')
-            fetch('/subscribe', {
-                method: 'POST',
-                body: JSON.stringify(push),
-                headers: {
-                    'content-type': 'application/json'
-                }
-            }).then(() => {
-                console.log('Push subscription sent')
-            }).catch((e) => {
-                console.log("Error while sendind push sub", e)
-            })
-        }
-
-
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 

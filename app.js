@@ -51,6 +51,7 @@ app.post('/subscribe', (req, res) => {
 
 app.post('/sync', (req, res) => {
     const subscription = req.body;
+    console.log(subscription)
 
     res.status(201).json({})
 

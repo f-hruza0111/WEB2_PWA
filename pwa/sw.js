@@ -188,12 +188,15 @@ async function syncTrinkets() {
         });
     
       
-        const sub = self.registration.pushManager.getSubscription()
+        let push = await navigator.serviceWorker.ready.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array('BEwSqAEzcmIJlC1FX2JpO8yL_ALcwo8of2p25SvPhLP8hyzqiT9YArvhdQf1vQOYgEBPf9-_7XfVqdM3d3vcczU')
+        });
 
         console.log('Sending sync notification')
         fetch('/sync', {
             method: 'POST',
-            body: JSON.stringify(sub),
+            body: JSON.stringify(push),
             headers: {
                 'content-type': 'application/json'
             }
