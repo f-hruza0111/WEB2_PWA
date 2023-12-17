@@ -54,13 +54,15 @@ app.post('/sync', (req, res) => {
 
     res.status(201).json({})
 
-    const payload = JSON.stringify({title: 'Background Sync', text: "Background sync completed successfully"})
+    const payload = JSON.stringify({title: 'Background Sync', text: "Background sync of data was successful"})
 
     push.sendNotification(subscription, payload)
     .catch(e => {
         console.log(e)
     })
 })
+
+
 
 app.get('/new', function (req, res) {
     res.sendFile(path.join(__dirname, "pwa", "new.html"));

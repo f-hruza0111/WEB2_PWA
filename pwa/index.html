@@ -32,6 +32,7 @@
     </ul> -->
     <div class="container" id="list" >
         <a class="btn btn-primary" style="padding: 5px; margin: 5px;" href="/new">Add new item</a>
+        <button onclick="subscribe()" class="btn btn-primary" style="padding: 5px; margin: 5px;">Subscribe to notifications</button>
         
     </div>
 
@@ -120,27 +121,30 @@
         let sw = await navigator.serviceWorker.ready;
 
         sw.periodicSync.register('syncData', {
-            minInterval: 1
+            minInterval: 5
         });
 
 
-        let push = await sw.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array('BEwSqAEzcmIJlC1FX2JpO8yL_ALcwo8of2p25SvPhLP8hyzqiT9YArvhdQf1vQOYgEBPf9-_7XfVqdM3d3vcczU')
-        });
+       async function subscribe(){
+            let push = await sw.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array('BEwSqAEzcmIJlC1FX2JpO8yL_ALcwo8of2p25SvPhLP8hyzqiT9YArvhdQf1vQOYgEBPf9-_7XfVqdM3d3vcczU')
+            });
 
-        console.log('Push registered')
-        fetch('/subscribe', {
-            method: 'POST',
-            body: JSON.stringify(push),
-            headers: {
-                'content-type': 'application/json'
-            }
-        }).then(() => {
-            console.log('Push subscription sent')
-        }).catch((e) => {
-            console.log("Error while sendind push sub", e)
-        })
+            console.log('Push registered')
+            fetch('/subscribe', {
+                method: 'POST',
+                body: JSON.stringify(push),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            }).then(() => {
+                console.log('Push subscription sent')
+            }).catch((e) => {
+                console.log("Error while sendind push sub", e)
+            })
+        }
+
 
     </script>
 

@@ -190,7 +190,7 @@ async function syncTrinkets() {
       
         const sub = self.registration.pushManager.getSubscription()
 
-        // console.log('Sending sync notification')
+        console.log('Sending sync notification')
         fetch('/sync', {
             method: 'POST',
             body: JSON.stringify(sub),
@@ -198,7 +198,7 @@ async function syncTrinkets() {
                 'content-type': 'application/json'
             }
         }).then(() => {
-            // console.log('Push subscription sent')
+            console.log('Push sync sent')
         }).catch((e) => {
             console.log("Error while sendind sync push", e)
         })
